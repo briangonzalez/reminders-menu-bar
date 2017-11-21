@@ -9,6 +9,10 @@
 
 Reminders in your menubar.
 
+## Demo
+
+<img alt="reminders menu bar demo" src="https://user-images.githubusercontent.com/659829/33078327-27f7a484-ce87-11e7-98e8-e0a7c664c61d.gif" width=350>
+
 ## Description
 
 Reminders Menu Bar is neat because, instead of recreating the entire complex Reminders UI, it simply
