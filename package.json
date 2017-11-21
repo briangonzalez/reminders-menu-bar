@@ -2,7 +2,8 @@
     "name": "reminders-menu-bar",
     "productName": "reminders-menu-bar",
     "version": "1.0.0",
-    "description": "My Electron application description",
+    "description": "Reminders in your menubar.",
+    "repository": "briangonzalez/reminders-menu-bar",
     "main": "src/index.js",
     "scripts": {
         "start": "electron-forge start",
@@ -47,6 +48,7 @@
         }
     },
     "dependencies": {
+        "child-process-promise": "^2.2.1",
         "electron-compile": "^6.4.2",
         "electron-squirrel-startup": "^1.0.0"
     },

@@ -1,34 +1,32 @@
-import childProcess from 'child_process'
 import path from 'path'
+import { exec } from 'child-process-promise'
 
-function isRunning () {
+async function isRunning () {
   const p = path.resolve(__dirname, '../applescripts/is-running.applescript')
-  const out = childProcess.execSync(p, { encoding: 'utf8' })
-  return out.includes('true')
+  const out = await exec(p, { encoding: 'utf8' })
+  return out.stdout.includes('true')
 }
 
-function isMini () {
+async function isMini () {
   const p = path.resolve(__dirname, '../applescripts/is-mini.applescript')
-  const out = childProcess.execSync(p, { encoding: 'utf8' })
-  return out.includes('true')
+  let out = await exec(p, { encoding: 'utf8' })
+  return out.stdout.includes('true')
 }
 
-function isHidden () {
+async function isHidden () {
   const p = path.resolve(__dirname, '../applescripts/is-hidden.applescript')
-  const out = childProcess.execSync(p, { encoding: 'utf8' })
-  return !out.includes('true')
+  const out = await exec(p, { encoding: 'utf8' })
+  return !out.stdout.includes('true')
 }
 
-function open () {
-  childProcess.execSync('open /Applications/Reminders.app')
+async function open () {
+  exec('open /Applications/Reminders.app')
 }
 
-function getLists () {
-  return childProcess
-    .execSync('osascript -e \'tell application "Reminders" to set todo_lists to (get name of every list)\'', {
-      encoding: 'utf8'
-    })
-    .split(', ')
+async function getLists () {
+  const out = await exec('osascript -e \'tell application "Reminders" to set todo_lists to (get name of every list)\'')
+  const lists = out.stdout.split(', ')
+  return lists
 }
 
 export {

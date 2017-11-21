@@ -1,45 +1,21 @@
 import { app, Tray, dialog, Menu } from 'electron'
 import { isHidden, isMini, isRunning, open, getLists } from './reminders'
+import { setActive, setInactive, setAttention } from './icons'
 import path from 'path'
 import childProcess from 'child_process'
 
 let isActive = false
-let hasQuit
-
-function setInactive (tray) {
-  tray.setHighlightMode('never')
-  const p = path.resolve(__dirname, '../applescripts/hide.applescript')
-  childProcess.execSync(p)
-
-  const inactiveIcon = path.join(__dirname, 'icon.png')
-  tray.setImage(inactiveIcon)
-}
-
-function setActive (tray, bounds = null) {
-  tray.setHighlightMode('always')
-  const activeIcon = path.join(__dirname, 'icon-active.png')
-  tray.setImage(activeIcon)
-
-  const p = path.resolve(__dirname, '../applescripts/activate-and-position.applescript')
-  childProcess.execSync(`${p} ${bounds ? `${bounds.x} ${bounds.y}` : ''}`)
-}
-
-function setAttention (tray) {
-  tray.setHighlightMode('never')
-  const activeIcon = path.join(__dirname, 'icon-attention.png')
-  tray.setImage(activeIcon)
-}
 
 let highlightIndex
-function showRemindersListMenu (tray) {
+async function showRemindersListMenu (tray) {
   getLists()
 
-  const lists = getLists()
+  const lists = await getLists()
 
   const menuItems = lists.map((item, index) => ({
     label: item,
     click () {
-      childProcess.execSync(`osascript -e 'tell application "Reminders" to show list ${index + 1}'`)
+      childProcess.exec(`osascript -e 'tell application "Reminders" to show list ${index + 1}'`)
     }
   }))
 
@@ -74,63 +50,61 @@ function showopenDialog (tray) {
   })
 }
 
-function bindEvents (tray, app) {
-  tray.on('click', (e, bounds) => {
-    if (!isRunning()) {
+async function bindEvents (tray, app) {
+  tray.on('click', async (e, bounds) => {
+    const running = await isRunning()
+    if (!running) {
       showopenDialog(tray)
       return
     }
 
     if (e.ctrlKey) {
-      showRemindersListMenu(tray)
+      await showRemindersListMenu(tray)
       return
     }
 
     if (isActive) {
-      setInactive(tray)
+      await setInactive(tray)
     } else {
-      setActive(tray, bounds)
+      await setActive(tray, bounds)
     }
 
     isActive = !isActive
   })
 
-  tray.on('right-click', () => {
+  tray.on('right-click', async () => {
     if (!isRunning()) {
       showopenDialog()
-      setInactive(tray)
+      await setInactive(tray)
       return
     }
 
-    showRemindersListMenu(tray)
-  })
-
-  app.on('quit', () => {
-    hasQuit = true
+    await showRemindersListMenu(tray)
   })
 }
 
-function setupWatcher (tray) {
-  setInterval(() => {
-    if (hasQuit) return
-
-    if (!isRunning()) {
-      setAttention(tray)
+async function setupWatcher (tray) {
+  return setInterval(async () => {
+    const running = await isRunning()
+    if (!running) {
+      await setAttention(tray)
       return
     }
 
-    const isMiniOrHiddenAndMini = isMini() || (isHidden() && !isMini())
-    if (!isActive && !isMiniOrHiddenAndMini) {
+    const mini = await isMini()
+    const hidden = await isHidden()
+    const isMiniOrHiddenAndNotMini = mini || (hidden && !mini)
+    if (!isActive && !isMiniOrHiddenAndNotMini) {
       isActive = true
-      setActive(tray)
+      await setActive(tray)
       return
     }
 
-    if (isActive && isMiniOrHiddenAndMini) {
+    if (isActive && isMiniOrHiddenAndNotMini) {
       isActive = false
       setInactive(tray)
     }
-  }, 3000)
+  }, 10000)
 }
 
 function createTray () {
@@ -146,14 +120,19 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 
 app.dock.hide()
 
-app.on('ready', () => {
-  if (!isRunning()) {
+app.on('ready', async () => {
+  const running = await isRunning()
+  if (!running) {
     open()
   }
 
   const tray = createTray()
 
-  setupWatcher(tray)
+  const interval = await setupWatcher(tray)
+  app.on('before-quit', () => {
+    clearInterval(interval)
+  })
+
   setInactive(tray)
   bindEvents(tray, app)
 })
