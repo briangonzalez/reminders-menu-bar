@@ -1,53 +1,73 @@
 import { app, Tray, dialog, Menu } from 'electron'
-import { isHidden, isMini, isRunning, open, getLists } from './reminders'
+import {
+  isHidden,
+  isMini,
+  isRunning,
+  open,
+  getListsWithCLI,
+  switchList
+} from './reminders'
+
 import { setActive, setInactive, setAttention } from './icons'
 import path from 'path'
-import childProcess from 'child_process'
 
+// ask for Reminders permission
+let lists
 let isActive = false
 
-let highlightIndex
+let badgeList
 async function showRemindersListMenu (tray) {
-  getLists()
-
-  const lists = await getLists()
-
-  const menuItems = lists.map((item, index) => ({
-    label: item,
+  const menuItems = lists.map(list => ({
+    label: list,
     click () {
-      childProcess.exec(`osascript -e 'tell application "Reminders" to show list ${index + 1}'`)
+      switchList(list)
     }
   }))
 
-  const buildSelectBadgeList = () => lists.map((item, index) => ({
-    label: item,
-    type: 'radio',
-    checked: highlightIndex === index,
-    click: () => { highlightIndex = index }
-  }))
+  const buildSelectBadgeList = () =>
+    lists.map(list => ({
+      label: list,
+      type: 'radio',
+      checked: badgeList,
+      click: () => {
+        badgeList = list
+      }
+    }))
 
   const menu = Menu.buildFromTemplate([
-      { label: 'Switch list…', enabled: false },
+    { label: 'Switch list…', enabled: false },
     ...menuItems,
-      { type: 'separator' },
-      { label: 'List for badge', submenu: buildSelectBadgeList() },
-      { label: 'Quit', role: 'quit' }
+    { type: 'separator' },
+    {
+      label: 'Refresh lists',
+      async click () {
+        lists = await getListsWithCLI()
+        showRemindersListMenu(tray)
+      }
+    },
+    { type: 'separator' },
+    { label: 'List for badge', submenu: buildSelectBadgeList() },
+    { label: 'Quit', role: 'quit' }
   ])
 
   tray.popUpContextMenu(menu)
 }
 
 function showopenDialog (tray) {
-  dialog.showMessageBox({
-    message: 'Reminders app not running',
-    detail: 'In order for Reminders Menu Bar to work, Reminders.app must be running.',
-    buttons: ['Open Reminders.app', 'Cancel']
-  }, (index) => {
-    if (index === 0) {
-      open()
-      setInactive(tray)
+  dialog.showMessageBox(
+    {
+      message: 'Reminders app not running',
+      detail:
+        'In order for Reminders Menu Bar to work, Reminders.app must be running.',
+      buttons: ['Open Reminders.app', 'Cancel']
+    },
+    index => {
+      if (index === 0) {
+        open()
+        setInactive(tray)
+      }
     }
-  })
+  )
 }
 
 async function bindEvents (tray, app) {
@@ -63,13 +83,12 @@ async function bindEvents (tray, app) {
       return
     }
 
-    if (isActive) {
+    isActive = !isActive
+    if (!isActive) {
       await setInactive(tray)
     } else {
       await setActive(tray, bounds)
     }
-
-    isActive = !isActive
   })
 
   tray.on('right-click', async () => {
@@ -114,11 +133,12 @@ function createTray () {
 }
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
+if (require('electron-squirrel-startup')) {
+  // eslint-disable-line global-require
   app.quit()
 }
 
-app.dock.hide()
+// app.dock.hide()
 
 app.on('ready', async () => {
   const running = await isRunning()
@@ -126,6 +146,7 @@ app.on('ready', async () => {
     open()
   }
 
+  lists = await getListsWithCLI()
   const tray = createTray()
 
   const interval = await setupWatcher(tray)

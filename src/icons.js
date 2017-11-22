@@ -7,7 +7,7 @@ function setInactive (tray) {
   const inactiveIcon = path.join(__dirname, 'icon.png')
   tray.setImage(inactiveIcon)
 
-  const p = path.resolve(__dirname, '../applescripts/hide.applescript')
+  const p = path.resolve(__dirname, '../scripts/hide.applescript')
   exec(p)
 }
 
@@ -17,13 +17,13 @@ async function setActive (tray, bounds = null) {
   const activeIcon = path.join(__dirname, 'icon-active.png')
   tray.setImage(activeIcon)
 
-  const activateScript = path.resolve(__dirname, '../applescripts/activate.applescript')
-  const positionScript = path.resolve(__dirname, '../applescripts/position.applescript')
-  const hideSidebarScript = path.resolve(__dirname, '../applescripts/hide-sidebar.applescript')
+  const activateScript = path.resolve(__dirname, '../scripts/activate.applescript')
+  const positionScript = path.resolve(__dirname, '../scripts/position.applescript')
+  const hideSidebarScript = path.resolve(__dirname, '../scripts/hide-sidebar.applescript')
 
   await exec(activateScript)
-  await exec(`${positionScript} ${bounds ? `${bounds.x} ${bounds.y}` : ''}`)
   await exec(hideSidebarScript)
+  await exec(`${positionScript} ${bounds ? `${bounds.x} ${bounds.y}` : ''}`)
 }
 
 function setAttention (tray) {

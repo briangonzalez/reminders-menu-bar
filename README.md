@@ -22,6 +22,10 @@ repositions Reminders.app that comes on your system to create the illusion that 
 
 Head over and grab the [latest release](https://github.com/briangonzalez/reminders-menu-bar/releases/latest).
 
+## Granting Access
+
+When the app first boots up, you'll be asked to grant permissions to access Reminders. Please click yes.
+
 ## Usage
 
 ### `click`
