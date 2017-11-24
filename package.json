@@ -1,14 +1,14 @@
 {
     "name": "reminders-menu-bar",
     "productName": "reminders-menu-bar",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Reminders in your menubar.",
     "repository": "briangonzalez/reminders-menu-bar",
     "main": "src/index.js",
     "scripts": {
         "start": "electron-forge start",
         "_package": "electron-forge package",
-        "make": "electron-forge make",
+        "_make": "electron-forge make",
         "_publish": "electron-forge publish",
         "lint": "eslint src --color",
         "postinstall": "osascript scripts/add-to-login-items.applescript"
