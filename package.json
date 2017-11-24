@@ -11,7 +11,7 @@
         "make": "electron-forge make",
         "publish": "electron-forge publish",
         "lint": "eslint src --color",
-        "postinstall": "node scripts/register-startup.js"
+        "postinstall": "osascript scripts/add-to-login-items.applescript"
     },
     "keywords": [],
     "author": "bgonzalez",
@@ -56,7 +56,6 @@
     },
     "dependencies": {
         "applescript": "^1.0.0",
-        "auto-launch": "^5.0.3",
         "child-process-promise": "^2.2.1",
         "electron-compile": "^6.4.2",
         "electron-osx-sign": "^0.4.7",
