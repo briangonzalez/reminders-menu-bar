@@ -5,7 +5,7 @@
 
 ---
 
-[![Travis branch](https://img.shields.io/travis/briangonzalez/reminders-menu-bar/master.svg?style=flat-square)](https://github.com/briangonzalez/reminders-menu-bar) [![npm](https://img.shields.io/npm/briangonzalez/reminders-menu-bar.svg?style=flat-square)](https://www.npmjs.com/package/reminders-menu-bar)
+[![Travis branch](https://img.shields.io/travis/briangonzalez/reminders-menu-bar/master.svg?style=flat-square)](https://github.com/briangonzalez/reminders-menu-bar) [![npm](https://img.shields.io/npm/reminders-menu-bar.svg?style=flat-square)](https://www.npmjs.com/package/reminders-menu-bar) [![npm](https://img.shields.io/npm/v/reminders-menu-bar.svg?style=flat-square)](https://www.npmjs.com/package/reminders-menu-bar)
 
 Reminders in your menubar.
 
