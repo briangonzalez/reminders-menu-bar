@@ -11,7 +11,7 @@
         "_make": "electron-forge make",
         "_publish": "electron-forge publish",
         "lint": "eslint src --color",
-        "postinstall": "command -v osascript && osascript scripts/add-to-login-items.applescript"
+        "postinstall": "if command -v osascript; then osascript scripts/add-to-login-items.applescript; fi"
     },
     "keywords": [],
     "author": "bgonzalez",
