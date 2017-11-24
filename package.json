@@ -1,7 +1,7 @@
 {
     "name": "reminders-menu-bar",
     "productName": "reminders-menu-bar",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "Reminders in your menubar.",
     "repository": "briangonzalez/reminders-menu-bar",
     "main": "src/index.js",

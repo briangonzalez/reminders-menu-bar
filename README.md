@@ -20,26 +20,19 @@ repositions Reminders.app that comes on your system to create the illusion that 
 
 ## Installation
 
-Head over and grab the [latest release](https://github.com/briangonzalez/reminders-menu-bar/releases/latest).
+```sh
+npm install -g reminders-menu-bar
+```
 
-## Granting Access
+_Note: a postinstall script will register the application for startup._
 
-When the app first boots up, you'll be asked to grant permissions to access Reminders. Please click yes.
+## Caveats
 
-## Usage
+When the app first boots up, you'll be asked to grant permissions to access Reminders. You'll need to confirm for it to work.
 
-### `click`
-
-Show Reminders.app
-
-### `right` click / `ctrl` click
-
-Open context menu with the ability to:
-
-- switch lists
-- choose list for badge
-- set startup mode
-- quit
+- Navigate to `System Preferences`
+- `Security & Privacy -> Accessibility -> Privacy`
+- Click `+`
 
 ### License
 
