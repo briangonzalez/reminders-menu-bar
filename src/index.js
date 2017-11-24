@@ -4,7 +4,7 @@ import {
   isMini,
   isRunning,
   open,
-  getListsWithCLI,
+  getLists,
   switchList
 } from './reminders'
 
@@ -41,7 +41,7 @@ async function showRemindersListMenu (tray) {
     {
       label: 'Refresh lists',
       async click () {
-        lists = await getListsWithCLI()
+        lists = await getLists()
         showRemindersListMenu(tray)
       }
     },
@@ -123,7 +123,7 @@ async function setupWatcher (tray) {
       isActive = false
       setInactive(tray)
     }
-  }, 10000)
+  }, 3000)
 }
 
 function createTray () {
@@ -138,7 +138,7 @@ if (require('electron-squirrel-startup')) {
   app.quit()
 }
 
-// app.dock.hide()
+app.dock.hide()
 
 app.on('ready', async () => {
   const running = await isRunning()
@@ -146,7 +146,7 @@ app.on('ready', async () => {
     open()
   }
 
-  lists = await getListsWithCLI()
+  lists = await getLists()
   const tray = createTray()
 
   const interval = await setupWatcher(tray)

@@ -1,3 +1,5 @@
+#!/usr/bin/osascript
+
 on run argv
   local rem_list
   if (count of argv) > 0 then

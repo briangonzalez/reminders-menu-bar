@@ -1,6 +1,5 @@
 import path from 'path'
 import { exec } from 'child-process-promise'
-import childProcess from 'child_process'
 
 async function isRunning () {
   const p = path.resolve(__dirname, '../scripts/is-running.applescript')
@@ -20,15 +19,14 @@ async function isHidden () {
   return !out.stdout.includes('true')
 }
 
-async function open () {
-  exec('open /Applications/Reminders.app')
+async function isFrontmost () {
+  const p = path.resolve(__dirname, '../scripts/is-frontmost.applescript')
+  const out = await exec(p, { encoding: 'utf8' })
+  return out.stdout.includes('Reminders')
 }
 
-async function getListsWithCLI () {
-  /* Very SLOW! */
-  const remindersCli = path.join(__dirname, '../bin/reminders-cli')
-  const out = await exec(`${remindersCli} show-lists`)
-  return out.stdout.trim().split('\n')
+async function open () {
+  exec('open /Applications/Reminders.app')
 }
 
 async function getLists () {
@@ -40,25 +38,16 @@ async function getLists () {
 }
 
 function switchList (list) {
-  // const p = path.resolve(__dirname, '../scripts/bin/switch-list')
-  // exec(`osascript ${p} "${list}"`)
-  // childProcess.spawn(`/usr/bin/osascript`,
-  //   [
-  //     '-e',
-  //     `tell application "Reminders" to show list "${list}"`
-  //   ]
-  // )
-  childProcess.exec(`/bin/sh ./scripts/switch-list.sh "${list}"`, (err) => {
-    console.log(err)
-  })
+  const p = path.resolve(__dirname, '../scripts/switch-list.applescript')
+  exec(`${p} "${list}"`)
 }
 
 export {
   open,
+  isFrontmost,
   isHidden,
   isMini,
   isRunning,
   getLists,
-  getListsWithCLI,
   switchList
 }
