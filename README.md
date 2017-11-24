@@ -5,7 +5,7 @@
 
 ---
 
-[![Travis branch](https://img.shields.io/travis/briangonzalez/reminders-menu-bar/master.svg?style=flat-square)](https://github.com/briangonzalez/reminders-menu-bar) [![npm](https://img.shields.io/npm/reminders-menu-bar.svg?style=flat-square)](https://www.npmjs.com/package/reminders-menu-bar) [![npm](https://img.shields.io/npm/v/reminders-menu-bar.svg?style=flat-square)](https://www.npmjs.com/package/reminders-menu-bar)
+[![Travis branch](https://img.shields.io/travis/briangonzalez/reminders-menu-bar/master.svg?style=flat-square)](https://github.com/briangonzalez/reminders-menu-bar) [![npm](https://img.shields.io/npm/dw/reminders-menu-bar.svg?style=flat-square)](https://www.npmjs.com/package/reminders-menu-bar) [![npm](https://img.shields.io/npm/v/reminders-menu-bar.svg?style=flat-square)](https://www.npmjs.com/package/reminders-menu-bar)
 
 Reminders in your menubar.
 
@@ -26,13 +26,17 @@ npm install -g reminders-menu-bar
 
 _Note: a postinstall script will register the application for startup._
 
-## Caveats
+To boot the app up immediately after install (remember, we'll start the app up for you on next boot),
+run `reminders-menu-bar`. To get everything _fully working_, you'll need to grant acess
 
-_Granting access to Reminders_
+## Granting Access
 
-When the app first boots up, you'll be asked to grant permissions to access Reminders. You'll need to confirm for it to work.
+**Granting access to Reminders**
 
-_Granting access to reposition Reminders.app_
+When the app first boots up, you'll be asked to grant permissions to access Reminders.
+You'll need to confirm for things to work.
+
+**Granting access to reposition Reminders.app**
 
 - Get path to `Reminders Menu Bar.app`
   - After installation, run `npm ls -g reminders-menu-bar`
@@ -41,7 +45,6 @@ _Granting access to reposition Reminders.app_
 - Navigate to `System Preferences -> Security & Privacy -> Accessibility -> Privacy`
 - Click `+`
 - Add `Reminders Menu Bar.app` from Step 1
-
 
 ### License
 
