@@ -1,4 +1,3 @@
-
 <p align="center">
   <img alt="reminders menu bar" src="https://user-images.githubusercontent.com/659829/33078156-aa1e76dc-ce86-11e7-9aee-b4090593957f.png" width=200>
 </p>
@@ -24,10 +23,12 @@ repositions Reminders.app that comes on your system to create the illusion that 
 npm install -g reminders-menu-bar
 ```
 
-_Note: a postinstall script will register the application for startup._
+_Note: a postinstall script will register the application for startup_
 
 To boot the app up immediately after install (remember, we'll start the app up for you on next boot),
-run `reminders-menu-bar`. To get everything _fully working_, you'll need to grant acess
+run `reminders-menu-bar`. To get everything _fully working_, you'll need to grant access (see below).
+
+You can remove this app from startup in `System Preferences`.
 
 ## Granting Access
 
@@ -36,15 +37,14 @@ run `reminders-menu-bar`. To get everything _fully working_, you'll need to gran
 When the app first boots up, you'll be asked to grant permissions to access Reminders.
 You'll need to confirm for things to work.
 
-**Granting access to reposition Reminders.app**
+**Granting access to reposition Reminders.app on screen**
 
-- Get path to `Reminders Menu Bar.app`
-  - After installation, run `npm ls -g reminders-menu-bar`
-  - open `<path from above>/node_modules/reminders-menu-bar/scripts`
+1. Show parent folder `System Events.app` in Finder
+  - `open /System/Library/CoreServices/`
 
-- Navigate to `System Preferences -> Security & Privacy -> Accessibility -> Privacy`
-- Click `+`
-- Add `Reminders Menu Bar.app` from Step 1
+2. Navigate to `System Preferences -> Security & Privacy -> Accessibility -> Privacy`
+3. Click `+`
+4. Drag `System Events.app` onto dialog
 
 ### License
 
