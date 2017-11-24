@@ -1,7 +1,7 @@
 {
     "name": "reminders-menu-bar",
     "productName": "reminders-menu-bar",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "Reminders in your menubar.",
     "repository": "briangonzalez/reminders-menu-bar",
     "main": "src/index.js",
@@ -63,13 +63,13 @@
         "electron-compile": "^6.4.2",
         "electron-osx-sign": "^0.4.7",
         "electron-squirrel-startup": "^1.0.0",
-        "run-node": "^0.1.1"
+        "run-node": "^0.1.1",
+        "electron-forge": "^4.1.3"
     },
     "devDependencies": {
         "babel-plugin-transform-async-to-generator": "^6.24.1",
         "babel-preset-env": "^1.6.1",
         "babel-preset-react": "^6.24.1",
-        "electron-forge": "^4.1.3",
         "electron-prebuilt-compile": "1.7.9",
         "eslint": "^3",
         "eslint-config-standard": "^10.2.1",
