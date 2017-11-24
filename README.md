@@ -5,11 +5,7 @@
 
 ---
 
-[![Build Status](https://travis-ci.org/briangonzalez/reminders-menu-bar.svg?branch=master&style=flat-square)](https://travis-ci.org/briangonzalez/reminders-menu-bar)
-
-[![Travis branch](https://img.shields.io/travis/briangonzalez/reminders-menu-bar/master.svg?style=flat-square)](https://github.com/briangonzalez/reminders-menu-bar)
-
-[![npm](https://img.shields.io/npm/briangonzalez/reminders-menu-bar.svg?style=flat-square)]()
+[![Travis branch](https://img.shields.io/travis/briangonzalez/reminders-menu-bar/master.svg?style=flat-square)](https://github.com/briangonzalez/reminders-menu-bar) [![npm](https://img.shields.io/npm/briangonzalez/reminders-menu-bar.svg?style=flat-square)]()
 
 Reminders in your menubar.
 
