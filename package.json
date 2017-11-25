@@ -1,20 +1,18 @@
 {
   "name": "reminders-menu-bar",
   "productName": "reminders-menu-bar",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Reminders in your menubar.",
   "repository": "briangonzalez/reminders-menu-bar",
   "main": "src/index.js",
-  "bin": {
-    "reminders-menu-bar": "./scripts/open-app.sh"
-  },
   "scripts": {
     "start": "electron-forge start",
+    "lint": "eslint src --color",
+    "add-to-login-items": "osascript scripts/add-to-login-items.applescript",
+    "app": "./scripts/run-app.sh",
     "_package": "electron-forge package",
     "_make": "electron-forge make",
-    "_publish": "electron-forge publish",
-    "lint": "eslint src --color",
-    "postinstall": "if command -v osascript; then npm install electron-prebuilt-compile@1.7.9 --save-exact --save-dev && osascript scripts/add-to-login-items.applescript; fi"
+    "_publish": "electron-forge publish"
   },
   "keywords": [],
   "author": "bgonzalez",

@@ -1,10 +1,10 @@
 <p align="center">
-  <img alt="reminders menu bar" src="https://user-images.githubusercontent.com/659829/33078156-aa1e76dc-ce86-11e7-9aee-b4090593957f.png" width=200>
+  <img alt="reminders menu bar" src="https://user-images.githubusercontent.com/659829/33078156-aa1e76dc-ce86-11e7-9aee-b4090593957f.png" width=150>
 </p>
 
 ---
 
-[![Travis branch](https://img.shields.io/travis/briangonzalez/reminders-menu-bar/master.svg?style=flat-square)](https://github.com/briangonzalez/reminders-menu-bar) [![npm](https://img.shields.io/npm/dw/reminders-menu-bar.svg?style=flat-square)](https://www.npmjs.com/package/reminders-menu-bar) [![npm](https://img.shields.io/npm/v/reminders-menu-bar.svg?style=flat-square)](https://www.npmjs.com/package/reminders-menu-bar)
+[![Travis branch](https://img.shields.io/travis/briangonzalez/reminders-menu-bar/master.svg?style=flat-square)](https://github.com/briangonzalez/reminders-menu-bar)
 
 Reminders in your menubar.
 
@@ -20,15 +20,11 @@ repositions Reminders.app that comes on your system to create the illusion that 
 ## Installation
 
 ```sh
-npm install -g reminders-menu-bar
+git clone git@github.com:briangonzalez/reminders-menu-bar.git
+cd reminders-menu-bar
+npm run add-to-login-items # register as a login item
+npm run app # run the menu bar app
 ```
-
-_Note: a postinstall script will register the application for startup_
-
-To boot the app up immediately after install (remember, we'll start the app up for you on next boot),
-run `reminders-menu-bar`. To get everything _fully working_, you'll need to grant access (see below).
-
-You can remove this app from startup in `System Preferences`.
 
 ## Granting Access
 

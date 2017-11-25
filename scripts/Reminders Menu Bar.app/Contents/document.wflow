@@ -51,7 +51,9 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>source</key>
-					<string>set path_to_me to POSIX path of (path to me as text)set startup_script to "cd \"" &amp; path_to_me &amp; "\"  &amp;&amp; cd .. &amp;&amp; ./startup.sh"do shell script startup_script</string>
+					<string>set path_to_me to POSIX path of (path to me as text)
+set startup_script to "cd \"" &amp; path_to_me &amp; "\"  &amp;&amp; cd .. &amp;&amp; ./run-app.sh"
+do shell script startup_script</string>
 				</dict>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.RunScript</string>
@@ -87,9 +89,9 @@
 					<dict>
 						<key>default value</key>
 						<string>on run {input, parameters}
-	
+
 	(* Your script goes here *)
-	
+
 	return input
 end run</string>
 						<key>name</key>

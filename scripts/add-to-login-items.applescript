@@ -7,3 +7,5 @@ set login_item_path to POSIX path of alias app_file
 tell application "System Events"
    make login item at end with properties { path: login_item_path, hidden:true }
 end tell
+
+log "Added to login items."
