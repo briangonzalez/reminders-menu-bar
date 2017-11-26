@@ -23,6 +23,7 @@ repositions Reminders.app that comes on your system to create the illusion that 
 git clone git@github.com:briangonzalez/reminders-menu-bar.git
 cd reminders-menu-bar
 npm run add-to-login-items # register as a login item
+npm run remove-from-login-items # deregister as login item
 npm run app # run the menu bar app
 ```
 

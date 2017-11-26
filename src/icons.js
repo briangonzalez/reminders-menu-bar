@@ -1,5 +1,6 @@
 import { exec } from 'child-process-promise'
 import path from 'path'
+import { position, activate, hideSidebar, isPositioned } from './reminders'
 
 function setInactive (tray) {
   tray.setHighlightMode('never')
@@ -17,13 +18,12 @@ async function setActive (tray, bounds = null) {
   const activeIcon = path.join(__dirname, 'icon-active.png')
   tray.setImage(activeIcon)
 
-  const activateScript = path.resolve(__dirname, '../scripts/activate.applescript')
-  const positionScript = path.resolve(__dirname, '../scripts/position.applescript')
-  const hideSidebarScript = path.resolve(__dirname, '../scripts/hide-sidebar.applescript')
-
-  await exec(activateScript)
-  await exec(hideSidebarScript)
-  await exec(`${positionScript} ${bounds ? `${bounds.x} ${bounds.y}` : ''}`)
+  await activate()
+  const positioned = await isPositioned()
+  if (!positioned) {
+    await position(bounds)
+    await hideSidebar()
+  }
 }
 
 function setAttention (tray) {

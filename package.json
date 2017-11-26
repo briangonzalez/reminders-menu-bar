@@ -9,6 +9,7 @@
     "start": "electron-forge start",
     "lint": "eslint src --color",
     "add-to-login-items": "osascript scripts/add-to-login-items.applescript",
+    "remove-from-login-items": "osascript scripts/remove-from-login-items.applescript",
     "app": "./scripts/run-app.sh",
     "_package": "electron-forge package",
     "_make": "electron-forge make",

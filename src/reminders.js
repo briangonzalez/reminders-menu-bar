@@ -33,13 +33,34 @@ async function getLists () {
   const out = await exec(
     "osascript -e 'tell application \"Reminders\" to set todo_lists to (get name of every list)'"
   )
-  const lists = out.stdout.split(', ')
+  const lists = out.stdout.split(', ').map(l => l.trim())
   return lists
 }
 
-function switchList (list) {
+async function switchList (list) {
   const p = path.resolve(__dirname, '../scripts/switch-list.applescript')
-  exec(`${p} "${list}"`)
+  await exec(`${p} "${list}"`)
+}
+
+async function activate () {
+  const activateScript = path.resolve(__dirname, '../scripts/activate.applescript')
+  await exec(activateScript)
+}
+
+async function position (bounds) {
+  const positionScript = path.resolve(__dirname, '../scripts/position.applescript')
+  await exec(`${positionScript} ${bounds ? `${bounds.x} ${bounds.y}` : ''}`)
+}
+
+async function hideSidebar () {
+  const hideSidebarScript = path.resolve(__dirname, '../scripts/hide-sidebar.applescript')
+  await exec(hideSidebarScript)
+}
+
+async function isPositioned () {
+  const getBoundsScript = path.resolve(__dirname, '../scripts/get-bounds.applescript')
+  const out = await exec(getBoundsScript)
+  return out.stdout.split(', ')[1] === '40' // moved to upper right
 }
 
 export {
@@ -49,5 +70,9 @@ export {
   isMini,
   isRunning,
   getLists,
-  switchList
+  switchList,
+  position,
+  hideSidebar,
+  activate,
+  isPositioned
 }

@@ -5,7 +5,8 @@ import {
   isRunning,
   open,
   getLists,
-  switchList
+  switchList,
+  activate
 } from './reminders'
 
 import { setActive, setInactive, setAttention } from './icons'
@@ -20,7 +21,9 @@ async function showRemindersListMenu (tray) {
   const menuItems = lists.map(list => ({
     label: list,
     click () {
+      isActive = true
       switchList(list)
+      setActive(tray)
     }
   }))
 
@@ -46,7 +49,7 @@ async function showRemindersListMenu (tray) {
       }
     },
     { type: 'separator' },
-    { label: 'List for badge', submenu: buildSelectBadgeList() },
+    /* { label: 'List for badge', submenu: buildSelectBadgeList() }, */
     { label: 'Quit', role: 'quit' }
   ])
 
@@ -56,7 +59,7 @@ async function showRemindersListMenu (tray) {
 function showopenDialog (tray) {
   dialog.showMessageBox(
     {
-      message: 'Reminders app not running',
+      message: 'Reminders.app not running',
       detail:
         'In order for Reminders Menu Bar to work, Reminders.app must be running.',
       buttons: ['Open Reminders.app', 'Cancel']

@@ -21,7 +21,6 @@ on run argv
   end if
 
   tell application "System Events"
-
     try
       -- Put it in the upper right hand corner.
       set position of first window of application process "Reminders" to {x_loc, 40}
