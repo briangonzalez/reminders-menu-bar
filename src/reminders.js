@@ -29,12 +29,28 @@ async function open () {
   exec('open /Applications/Reminders.app')
 }
 
+async function countList (list) {
+  const p = path.resolve(__dirname, '../scripts/count-list.applescript')
+  const out = await exec(`${p} "${list}"`)
+  return out.stdout.trim()
+}
+
 async function getLists () {
   const out = await exec(
     "osascript -e 'tell application \"Reminders\" to set todo_lists to (get name of every list)'"
   )
   const lists = out.stdout.split(', ').map(l => l.trim())
-  return lists
+
+  const listsWithCounts = []
+  for (let list of lists) {
+    const count = await countList(list)
+    listsWithCounts.push({
+      name: list,
+      count
+    })
+  }
+
+  return listsWithCounts
 }
 
 async function switchList (list) {
@@ -64,15 +80,16 @@ async function isPositioned () {
 }
 
 export {
-  open,
+  activate,
+  countList,
+  getLists,
+  hideSidebar,
   isFrontmost,
   isHidden,
   isMini,
+  isPositioned,
   isRunning,
-  getLists,
-  switchList,
+  open,
   position,
-  hideSidebar,
-  activate,
-  isPositioned
+  switchList
 }
