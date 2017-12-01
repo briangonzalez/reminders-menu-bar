@@ -105,30 +105,6 @@ async function bindEvents (tray, app) {
   })
 }
 
-async function setupWatcher (tray) {
-  return setInterval(async () => {
-    const running = await isRunning()
-    if (!running) {
-      await setAttention(tray)
-      return
-    }
-
-    const mini = await isMini()
-    const hidden = await isHidden()
-    const isMiniOrHiddenAndNotMini = mini || (hidden && !mini)
-    if (!isActive && !isMiniOrHiddenAndNotMini) {
-      isActive = true
-      await setActive(tray)
-      return
-    }
-
-    if (isActive && isMiniOrHiddenAndNotMini) {
-      isActive = false
-      setInactive(tray)
-    }
-  }, 3000)
-}
-
 function createTray () {
   const inactiveIcon = path.join(__dirname, 'icon.png')
   const tray = new Tray(inactiveIcon)
@@ -151,11 +127,6 @@ app.on('ready', async () => {
 
   lists = await getLists()
   const tray = createTray()
-
-  const interval = await setupWatcher(tray)
-  app.on('before-quit', () => {
-    clearInterval(interval)
-  })
 
   setInactive(tray)
   bindEvents(tray, app)
