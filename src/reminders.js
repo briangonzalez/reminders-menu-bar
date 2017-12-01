@@ -41,14 +41,16 @@ async function getLists () {
   )
   const lists = out.stdout.split(', ').map(l => l.trim())
 
-  let index = 0
+  const listsWithCounts = []
   for (let list of lists) {
     const count = await countList(list)
-    lists[index] = `${lists[index]} (${count})`
-    index++
+    listsWithCounts.push({
+      name: list,
+      count
+    })
   }
 
-  return lists
+  return listsWithCounts
 }
 
 async function switchList (list) {

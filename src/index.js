@@ -9,33 +9,37 @@ import {
 import { setActive, setInactive, setAttention } from './icons'
 import path from 'path'
 
-// ask for Reminders permission
 let lists
 let isActive = false
+let isRefreshingLists = true
 
 async function showRemindersListMenu (tray) {
-  const menuItems = lists.map(list => ({
-    label: list,
-    click () {
-      isActive = true
-      switchList(list)
-      setActive(tray)
-    }
-  }))
+  let menuItems = []
+  if (!isRefreshingLists) {
+    menuItems = lists.map(list => ({
+      label: `${list.name} (${list.count})`,
+      click () {
+        isActive = true
+        switchList(list.name)
+        setActive(tray)
+      }
+    }))
+  }
 
   const menu = Menu.buildFromTemplate([
-    { label: 'Switch list…', enabled: false },
+    { label: isRefreshingLists ? 'Refreshing...' : 'Switch list...', enabled: false },
     ...menuItems,
     { type: 'separator' },
     {
       label: 'Refresh lists',
       async click () {
+        isRefreshingLists = true
         lists = await getLists()
+        isRefreshingLists = false
         showRemindersListMenu(tray)
       }
     },
     { type: 'separator' },
-    /* { label: 'List for badge', submenu: buildSelectBadgeList() }, */
     { label: 'Quit', role: 'quit' }
   ])
 
@@ -118,7 +122,6 @@ app.on('ready', async () => {
     open()
   }
 
-  lists = await getLists()
   const tray = createTray()
 
   const interval = await setupWatcher(tray)
@@ -128,4 +131,7 @@ app.on('ready', async () => {
 
   setInactive(tray)
   bindEvents(tray, app)
+
+  lists = await getLists()
+  isRefreshingLists = false
 })
