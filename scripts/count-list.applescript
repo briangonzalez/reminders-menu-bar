@@ -9,7 +9,8 @@ on run argv
 
   tell application "Reminders"
     set the_list to list reminder_list
-    set list_size to count of the_list
+    set the_reminders to (reminders in the_list whose completed is false)
+    set list_size to count of the_reminders
     return list_size
   end tell
 end run

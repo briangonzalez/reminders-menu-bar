@@ -1,12 +1,9 @@
 import { app, Tray, dialog, Menu } from 'electron'
 import {
-  isHidden,
-  isMini,
+  getLists,
   isRunning,
   open,
-  getLists,
-  switchList,
-  activate
+  switchList
 } from './reminders'
 
 import { setActive, setInactive, setAttention } from './icons'
