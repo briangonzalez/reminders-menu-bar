@@ -97,25 +97,8 @@ async function bindEvents (tray, app) {
 async function setupWatcher (tray) {
   return setInterval(async () => {
     const running = await isRunning()
-    if (!running) {
-      await setAttention(tray)
-      return
-    }
-
-    const mini = await isMini()
-    const hidden = await isHidden()
-    const isMiniOrHiddenAndNotMini = mini || (hidden && !mini)
-    if (!isActive && !isMiniOrHiddenAndNotMini) {
-      isActive = true
-      await setActive(tray)
-      return
-    }
-
-    if (isActive && isMiniOrHiddenAndNotMini) {
-      isActive = false
-      setInactive(tray)
-    }
-  }, 3000)
+    if (!running) { await setAttention(tray) }
+  }, 10000)
 }
 
 function createTray () {
