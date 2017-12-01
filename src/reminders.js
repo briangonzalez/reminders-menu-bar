@@ -42,6 +42,11 @@ async function switchList (list) {
   await exec(`${p} "${list}"`)
 }
 
+async function countList (list) {
+  const p = path.resolve(__dirname, '../scripts/count-list.applescript')
+  await exec(`${p} "${list}"`)
+}
+
 async function activate () {
   const activateScript = path.resolve(__dirname, '../scripts/activate.applescript')
   await exec(activateScript)
@@ -64,15 +69,16 @@ async function isPositioned () {
 }
 
 export {
-  open,
+  activate,
+  countList,
+  getLists,
+  hideSidebar,
   isFrontmost,
   isHidden,
   isMini,
+  isPositioned,
   isRunning,
-  getLists,
-  switchList,
+  open,
   position,
-  hideSidebar,
-  activate,
-  isPositioned
+  switchList
 }
