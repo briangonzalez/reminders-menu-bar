@@ -16,7 +16,6 @@ import path from 'path'
 let lists
 let isActive = false
 
-let badgeList
 async function showRemindersListMenu (tray) {
   const menuItems = lists.map(list => ({
     label: list,
@@ -26,16 +25,6 @@ async function showRemindersListMenu (tray) {
       setActive(tray)
     }
   }))
-
-  const buildSelectBadgeList = () =>
-    lists.map(list => ({
-      label: list,
-      type: 'radio',
-      checked: badgeList,
-      click: () => {
-        badgeList = list
-      }
-    }))
 
   const menu = Menu.buildFromTemplate([
     { label: 'Switch list…', enabled: false },
